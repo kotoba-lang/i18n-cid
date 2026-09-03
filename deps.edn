@@ -1,0 +1,15 @@
+{:paths ["src" "resources"]
+ ;; git/sha pins (workspace-standard). The sibling local/root dev variant
+ ;; lives in the :dev alias below.
+ :deps {io.github.kotoba-lang/io-ipld {:git/sha "48ba40490cf082a1473986ac757b8e2b214a3d1b"}
+        io.github.kotoba-lang/kotobase-lake {:git/sha "500cf1c83d711590f355dba5e00c85255eb7f089"}}
+ :aliases
+ {:test {:extra-paths ["test"]
+         :extra-deps {io.github.cognitect-labs/test-runner
+                      {:git/tag "v0.5.1" :git/sha "dfb30dd"}
+                      io.github.kotoba-lang/i18n {:git/sha "09032e1ab08f5899364306f7f90b684af2a09afe"}}
+         :main-opts ["-m" "cognitect.test-runner"]
+         :exec-fn cognitect.test-runner.api/test}
+  :dev {:extra-deps {io.github.kotoba-lang/i18n {:local/root "../i18n"}}}
+  :lint {:replace-deps {clj-kondo/clj-kondo {:mvn/version "2024.11.14"}}
+         :main-opts ["-m" "clj-kondo.main" "--lint" "src" "test"]}}}
