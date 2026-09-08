@@ -53,8 +53,25 @@ caller's.
   `i18n-cid.core` asks callers to bring their own `put!`/`get-fn`. Auth
   (CACAO capability, ADR-2608159100) belongs in the injected transport.
 
+## Piece 4 — pack (`i18n-cid.pack`)
+
+A Pinning Service fetches by CID, one round trip per block. A CARv2 makes a
+whole project's catalog set one object, so a Worker can serve any locale with
+a single ranged read. Built on
+[`kotoba-lang/io-ipld-car`](https://github.com/kotoba-lang/io-ipld-car).
+
+- `pack` — `(pack project {locale catalog ...})` encodes each catalog and the
+  project index via `i18n-cid.core`, then bundles every block into one CARv2
+  (`ipld.car.v2/pack`, index on, index block as the archive's only root).
+  Returns `{:car-bytes :entries :index-cid :locale-cids}`. The caller's `put!`
+  decides where the bytes live.
+- `unpack` — `(unpack car-bytes)` reads the archive back: resolves the index
+  from the roots and hands each locale block to `dag->catalog`. Returns
+  `{:index-cid :project :locales :catalogs {locale catalog}}` — `:catalogs` is
+  `=` to the maps that produced the archive.
+
 ## Test
 
 ```sh
-clojure -M:test   # 11 tests / 32 assertions, green
+clojure -M:test   # 13 tests / 45 assertions, green
 ```
