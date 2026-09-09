@@ -18,7 +18,7 @@
   Honesty boundary: this library encodes and addresses catalog bytes. It does
   not pin them (IPFS), announce them (IPNI), or authorize writes (Biscuit).
   Those are the caller's boundaries."
-  (:require [ipld.core :as ipld]
+  (:require [kotoba.lang.text] [ipld.core :as ipld]
             [kotobase.lake.catalog :as lake]))
 
 (def sniffer-note
@@ -79,12 +79,12 @@
   (cond
     (map? v) (if-let [kw (get v "$kw")]
                (if (re-find #"/" kw)
-                 (let [[ns-n n] (clojure.string/split kw #"/" 2)]
+                 (let [[ns-n n] (kotoba.lang.text/split kw #"/" 2)]
                    (keyword ns-n n))
                  (keyword kw))
                (into {} (map (fn [[k x]]
                                [(if (re-find #"/" k)
-                                  (let [[ns-n n] (clojure.string/split k #"/" 2)]
+                                  (let [[ns-n n] (kotoba.lang.text/split k #"/" 2)]
                                     (keyword ns-n n))
                                   (keyword k))
                                  (unwrap x)]))
@@ -102,7 +102,7 @@
          (into {}
                (map (fn [[k v]]
                       [(if (re-find #"/" k)
-                         (let [[ns-n n] (clojure.string/split k #"/" 2)]
+                         (let [[ns-n n] (kotoba.lang.text/split k #"/" 2)]
                            (keyword ns-n n))
                          (keyword k))
                         (unwrap v)]))))))
