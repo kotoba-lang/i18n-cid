@@ -73,5 +73,5 @@ a single ranged read. Built on
 ## Test
 
 ```sh
-clojure -M:test   # 13 tests / 45 assertions, green
+kbb -M:test   # 13 tests / 45 assertions, green
 ```
