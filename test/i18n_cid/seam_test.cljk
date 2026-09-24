@@ -1,5 +1,5 @@
 (ns i18n-cid.seam-test
-  (:require [clojure.test :refer [deftest is]]
+  (:require [kotoba.test :refer [deftest is]]
             [i18n-cid.core]
             [i18n-cid.seam :as seam]
             [i18n.core :as i18n]))

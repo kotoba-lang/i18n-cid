@@ -1,5 +1,5 @@
 (ns i18n-cid.core-test
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.test :refer [deftest is testing]]
             [i18n-cid.core :as ic]))
 
 (def catalog
